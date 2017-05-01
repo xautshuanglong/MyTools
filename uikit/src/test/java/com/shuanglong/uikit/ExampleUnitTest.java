@@ -1,4 +1,4 @@
-package com.shuanglong.shuanglongkit;
+package com.shuanglong.uikit;
 
 import org.junit.Test;
 

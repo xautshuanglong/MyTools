@@ -1,4 +1,4 @@
-package com.shuanglong.shuanglongkit;
+package com.shuanglong.uikit;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

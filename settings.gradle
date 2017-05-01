@@ -1,1 +1,1 @@
-include ':app', ':shuanglongkit'
+include ':app', ':uikit'

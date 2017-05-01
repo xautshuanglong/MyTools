@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.shuanglong.mytools.R;
 import com.shuanglong.mytools.utils.LogUtil;
+import com.shuanglong.uikit.views.CirclePoint;
 
 public class WelcomeActivity extends AppCompatActivity
 {
@@ -24,9 +25,16 @@ public class WelcomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        initView();
+    }
+
+    private void initView()
+    {
         mContentView = findViewById(R.id.fullscreen_content);
         mControlView = findViewById(R.id.fullscreen_content_controls);
         mActionBar = getSupportActionBar();
+
+        CirclePoint sf;
     }
 
     @Override
