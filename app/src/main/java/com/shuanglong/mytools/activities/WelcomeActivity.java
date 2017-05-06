@@ -1,19 +1,25 @@
 package com.shuanglong.mytools.activities;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.shuanglong.mytools.Fragments.GuideFragment;
+import com.shuanglong.mytools.Fragments.ModelPagerAdapter;
+import com.shuanglong.mytools.Fragments.PagerModelManager;
 import com.shuanglong.mytools.R;
-import com.shuanglong.mytools.utils.LogUtil;
-import com.shuanglong.uikit.views.CirclePoint;
+import com.shuanglong.uikit.framelayout.CircleIndicator;
+import com.shuanglong.uikit.viewpager.ScrollerViewPager;
 
-public class WelcomeActivity extends AppCompatActivity
+import java.util.ArrayList;
+import java.util.List;
+
+public class WelcomeActivity extends FragmentActivity
 {
-    private View mContentView = null;
-    private View mControlView = null;
+    private ScrollerViewPager scrollPager = null;
+    private CircleIndicator circleIndicator = null;
     private ActionBar mActionBar = null;
 
     private boolean mShowFlag = false;
@@ -21,71 +27,51 @@ public class WelcomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        LogUtil.debug("WelcomeActivity.java onCreate ------ 0010");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);                  // 隐藏标题栏
+        int flag = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;  // 状态栏透明
+        getWindow().setFlags(flag, flag);
+        flag = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;  // 导航栏透明
+        getWindow().setFlags(flag, flag);
+
+        setContentView(R.layout.activity_welcome);
         initView();
     }
 
     private void initView()
     {
-        mContentView = findViewById(R.id.fullscreen_content);
-        mControlView = findViewById(R.id.fullscreen_content_controls);
-        mActionBar = getSupportActionBar();
+        scrollPager = (ScrollerViewPager)findViewById(R.id.view_pager);
+        circleIndicator = (CircleIndicator)findViewById(R.id.view_indicator);
 
-        CirclePoint sf;
+        PagerModelManager manager = new PagerModelManager();
+
+        manager.addCommonFragment(GuideFragment.class, getBgList(), getTitleList());
+        ModelPagerAdapter adapter = new ModelPagerAdapter(getSupportFragmentManager(), manager);
+        scrollPager.setAdapter(adapter);
+        scrollPager.fixScrollSpeed();
+        circleIndicator.setViewPager(scrollPager);
     }
 
-    @Override
-    protected void onResume()
+    private List<String> getTitleList()
     {
-        super.onResume();
-        hideActionBar();
+        List<String> titleList = new ArrayList<String>();
+        titleList.add("1");
+        titleList.add("2");
+        titleList.add("3");
+        titleList.add("4");
+
+        return titleList;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event)
+    private List<Integer> getBgList()
     {
-        if (event.getAction()==MotionEvent.ACTION_DOWN)
-        {
-            if(mShowFlag)
-            {
-                mShowFlag = false;
-                hideActionBar();
-            }
-            else
-            {
-                mShowFlag = true;
-                showActionBar();
-            }
-        }
-        return super.onTouchEvent(event);
-    }
+        List<Integer> backImgList = new ArrayList<Integer>();
+        backImgList.add(R.mipmap.bg1);
+        backImgList.add(R.mipmap.bg2);
+        backImgList.add(R.mipmap.bg3);
+        backImgList.add(R.mipmap.bg4);
 
-    private void showActionBar()
-    {
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        if (mActionBar != null)
-        {
-            mActionBar.show();
-        }
-        mControlView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideActionBar()
-    {
-        if (mActionBar != null)
-        {
-            mActionBar.hide();
-        }
-//        mControlView.setVisibility(View.GONE);
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE |
-                View.SYSTEM_UI_FLAG_FULLSCREEN |
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        return backImgList;
     }
 }

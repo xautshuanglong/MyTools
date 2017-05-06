@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleIndicator">
+        <!--tab text color -->
+        <attr name="ciTextColor" format="reference"/>
+        <!--tab text color which is selected-->
+        <attr name="ciSelectedTextColor" format="reference"/>
+        <!--tab item bg -->
+        <attr name="ciTextBg" format="reference"/>
+        <!--tab text size-->
+        <attr name="ciTextSize" format="dimension"/>
+        <!--indicator bg color-->
+        <attr name="ciIndicatorColor" format="reference"/>
+        <!--indicator bg colors. should equals your titles count-->
+        <attr name="ciIndicatorColors" format="reference"/>
+        <!--max indicator radius-->
+        <attr name="ciRadiusMax" format="dimension"/>
+        <!--min indicator radius when moving-->
+        <attr name="ciRadiusMin" format="dimension"/>
+    </declare-styleable>
+</resources>
